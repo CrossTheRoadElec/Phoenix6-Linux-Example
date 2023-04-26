@@ -19,7 +19,7 @@ find_package(Threads REQUIRED)
 find_package(SDL2)
 
 # NOTE: The units library requires either <fmt/format.h> or <iostream>, use iostream
-add_compile_definitions(UNIT_LIB_DISABLE_FMT UNIT_LIB_ENABLE_IOSTREAM)
+add_definitions(-DUNIT_LIB_DISABLE_FMT -DUNIT_LIB_ENABLE_IOSTREAM)
 
 # Add all CPP files to the executable
 add_executable(${PROJECT_NAME} main.cpp RobotBase.cpp GameController.cpp)

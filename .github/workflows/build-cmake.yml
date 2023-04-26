@@ -64,6 +64,12 @@ jobs:
           # 64-bit arm on ubuntu 20.04
           - arch: aarch64
             distro: ubuntu20.04
+          # 32-bit arm on ubuntu 22.04
+          - arch: armv7
+            distro: ubuntu22.04
+          # 64-bit arm on ubuntu 22.04
+          - arch: aarch64
+            distro: ubuntu22.04
 
     runs-on: ubuntu-latest
 
