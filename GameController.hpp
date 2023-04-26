@@ -8,6 +8,8 @@
 
 /**
  * Manages a game controller using the SDL 2 library.
+ *
+ * Note: This requires Ubuntu 22.04+ or Debian Bullseye.
  */
 class GameController {
 private:
@@ -122,7 +124,7 @@ public:
     double GetAxis(SDL_GameControllerAxis axis) const
     {
         if (_joy) {
-            return SDL_GameControllerGetAxis(_joy, axis) / 32767.0;
+            return SDL_GameControllerGetAxis(_joy, axis) / 32768.0;
         } else {
             return 0.0;
         }

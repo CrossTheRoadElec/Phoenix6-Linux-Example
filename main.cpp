@@ -1,6 +1,6 @@
 #include "ctre/phoenixpro/TalonFX.hpp"
 #include "RobotBase.hpp"
-#include "GameController.hpp"
+#include "Joystick.hpp"
 
 using namespace ctre::phoenixpro;
 
@@ -24,8 +24,8 @@ private:
     controls::DutyCycleOut leftOut{0};
     controls::DutyCycleOut rightOut{0};
 
-    /* game controller */
-    GameController joy{0};
+    /* joystick */
+    Joystick joy{0};
 
 public:
     /* main robot interface */
@@ -65,7 +65,7 @@ void Robot::RobotInit()
  */
 void Robot::RobotPeriodic()
 {
-    /* periodically check that the game controller is still good */
+    /* periodically check that the joystick is still good */
     joy.Periodic();
 }
 
@@ -74,8 +74,10 @@ void Robot::RobotPeriodic()
  */
 bool Robot::IsEnabled()
 {
-    /* enable while holding the right bumper */
-    return joy.GetButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+    /* enable while joystick is an Xbox controller (6 axes),
+     * and we are holding the right bumper */
+    if (joy.GetNumAxes() < 6) return false;
+    return joy.GetButton(5); // SDL_CONTROLLER_BUTTON_RIGHTSHOULDER
 }
 
 /**
@@ -89,8 +91,8 @@ void Robot::EnabledInit() {}
 void Robot::EnabledPeriodic()
 {
     /* arcade drive */
-    double speed = -joy.GetAxis(SDL_CONTROLLER_AXIS_LEFTY);
-    double turn = joy.GetAxis(SDL_CONTROLLER_AXIS_RIGHTX);
+    double speed = -joy.GetAxis(1); // SDL_CONTROLLER_AXIS_LEFTY
+    double turn = joy.GetAxis(4); // SDL_CONTROLLER_AXIS_RIGHTX
 
     leftOut.Output = speed + turn;
     rightOut.Output = speed - turn;
