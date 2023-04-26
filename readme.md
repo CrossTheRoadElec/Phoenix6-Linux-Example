@@ -1,3 +1,5 @@
+[![Build Example](https://github.com/CrossTheRoadElec/PhoenixPro-Linux-Example/actions/workflows/build-cmake.yml/badge.svg)](https://github.com/CrossTheRoadElec/PhoenixPro-Linux-Example/actions/workflows/build-cmake.yml)
+
 # Build Process
 
  1. Make a build directory `mkdir build`

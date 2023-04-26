@@ -13,10 +13,14 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 # Prefer -lpthread
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
+# Get the machine triplet for pathing to SDL2
+execute_process(COMMAND "gcc -dumpmachine"
+                OUTPUT_VARIABLE MACHINE_TRIPLET)
+
 # Required packages
 find_package(phoenix-pro REQUIRED PATHS /usr/lib/phoenix-pro/cmake) # Typically the PATHS isn't required, but some targets prefer it
 find_package(Threads REQUIRED)
-find_package(SDL2)
+find_package(SDL2 PATHS /usr/lib/${MACHINE_TRIPLET}/cmake/SDL2)
 
 # NOTE: The units library requires either <fmt/format.h> or <iostream>, use iostream
 add_definitions(-DUNIT_LIB_DISABLE_FMT -DUNIT_LIB_ENABLE_IOSTREAM)
