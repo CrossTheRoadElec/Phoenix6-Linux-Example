@@ -78,6 +78,8 @@ jobs:
         arch: ${{ matrix.arch }}
         distro: ${{ matrix.distro }}
         run: |
+          apt-get update
+          apt-get install curl
           curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
           curl -s --compressed -o /etc/apt/sources.list.d/ctr2023.list "https://deb.ctr-electronics.com/ctr2023.list"
           apt-get update
