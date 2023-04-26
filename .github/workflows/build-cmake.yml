@@ -36,8 +36,8 @@ jobs:
       # Update apt and install phoenixpro
       - name: Install Phoenix Pro
         run: |
-          sudo apt Update
-          sudo apt install phoenix-pro cmake build-essential
+          sudo apt-get update
+          sudo apt-get install phoenix-pro cmake build-essential
 
       # Build using CMake
       - name: Build Example
