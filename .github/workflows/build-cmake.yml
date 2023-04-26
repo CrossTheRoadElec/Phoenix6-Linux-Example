@@ -18,8 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Build native on both ubuntu 20.04 and 22.04
-          - os: ubuntu-20.04
+          # Build native on both ubuntu 22.04
           - os: ubuntu-22.04
 
     runs-on: ${{ matrix.os }}
@@ -52,12 +51,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # 32-bit arm on ubuntu 18.04
-          - arch: armv7
-            distro: ubuntu18.04
-          # 46-bit arm on ubuntu 18.04
-          - arch: aarch64
-            distro: ubuntu18.04
           # 32-bit arm on ubuntu 20.04
           - arch: armv7
             distro: ubuntu20.04
