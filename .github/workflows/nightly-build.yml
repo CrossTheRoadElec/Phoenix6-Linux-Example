@@ -51,9 +51,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # 32-bit arm on ubuntu 20.04
+          # 32-bit arm on bullseye
           - arch: armv7
-            distro: ubuntu20.04
+            distro: bullseye
+          # 64-bit arm on bullseye
+          - arch: aarch64
+            distro: bullseye
+          # 32-bit arm on ubuntu 20.04 (Seems to have problems compiling despite it working fine on real hardware)
+          #- arch: armv7
+          #  distro: ubuntu20.04
           # 64-bit arm on ubuntu 20.04
           - arch: aarch64
             distro: ubuntu20.04

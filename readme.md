@@ -1,4 +1,4 @@
-[![Build Example](https://github.com/CrossTheRoadElec/PhoenixPro-Linux-Example/actions/workflows/build-cmake.yml/badge.svg)](https://github.com/CrossTheRoadElec/PhoenixPro-Linux-Example/actions/workflows/build-cmake.yml)
+[![Nightly Build](https://github.com/CrossTheRoadElec/PhoenixPro-Linux-Example/actions/workflows/nightly-build.yml/badge.svg)](https://github.com/CrossTheRoadElec/PhoenixPro-Linux-Example/actions/workflows/nightly-build.yml)
 
 # Build Process
 
