@@ -83,13 +83,22 @@ jobs:
       with:
         arch: ${{ matrix.arch }}
         distro: ${{ matrix.distro }}
-        run: |
+
+        # Not required, but speeds up builds by storing container images in
+        # a GitHub package registry.
+        githubToken: ${{ github.token }}
+
+        # Perform the installation in a cached state to speed up subsequent builds
+        install: |
           apt-get update
           apt-get install curl -y
           curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
           curl -s --compressed -o /etc/apt/sources.list.d/ctr2023.list "https://deb.ctr-electronics.com/ctr2023.list"
           apt-get update
           apt-get install phoenix-pro cmake build-essential libsdl2-dev -y
+
+        # Perform the necesary steps to build the example
+        run: |
           mkdir build
           cd build
           cmake ..
