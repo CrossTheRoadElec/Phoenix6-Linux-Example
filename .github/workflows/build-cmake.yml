@@ -1,0 +1,48 @@
+name: Build Example
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    # Run every day at 12:00 AM (nightly builds)
+    - cron: '0 12 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  build-native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Build native on both ubuntu 20.04 and 22.04
+          - os: ubuntu-20.04
+          - os: ubuntu-22.04
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      # Checkout code
+      - uses: actions/checkout@v3
+
+      # Perform Phoenix Pro installation process
+      - name: Add Phoenix Pro to local apt
+        run: |
+          sudo curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
+          sudo curl -s --compressed -o /etc/apt/sources.list.d/ctr2023.list "https://deb.ctr-electronics.com/ctr2023.list"
+
+      # Update apt and install phoenixpro
+      - name: Install Phoenix Pro
+        run: |
+          sudo apt Update
+          sudo apt install phoenix-pro cmake build-essential
+
+      # Build using CMake
+      - name: Build Example
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          make
