@@ -88,7 +88,7 @@ public:
     std::string GetName() const
     {
         if (_joy) {
-            return SDL_GameControllerName(_joy);
+            return SDL_JoystickName(_joy);
         } else {
             return "";
         }
