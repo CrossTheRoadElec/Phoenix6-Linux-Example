@@ -14,7 +14,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 # Required packages
-find_package(phoenix-pro REQUIRED)
+find_package(phoenix-pro REQUIRED PATHS /usr/lib/phoenix-pro/cmake) # Typically the PATHS isn't required, but some targets prefer it
 find_package(Threads REQUIRED)
 find_package(SDL2)
 
