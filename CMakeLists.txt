@@ -22,6 +22,9 @@ find_package(phoenix-pro REQUIRED PATHS /usr/lib/phoenix-pro/cmake) # Typically 
 find_package(Threads REQUIRED)
 find_package(SDL2 PATHS /usr/lib/${MACHINE_TRIPLET}/cmake/SDL2)
 
+# Explicitly include SDL2 directories
+include_directories(${SDL2_INCLUDE_DIRS})
+
 # NOTE: The units library requires either <fmt/format.h> or <iostream>, use iostream
 add_definitions(-DUNIT_LIB_DISABLE_FMT -DUNIT_LIB_ENABLE_IOSTREAM)
 
