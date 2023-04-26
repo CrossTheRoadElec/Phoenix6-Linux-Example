@@ -46,3 +46,43 @@ jobs:
           cd build
           cmake ..
           make
+
+  build-arm:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # 32-bit arm on ubuntu 18.04
+          - arch: armv7
+            distro: ubuntu18.04
+          # 46-bit arm on ubuntu 18.04
+          - arch: aarch64
+            distro: ubuntu18.04
+          # 32-bit arm on ubuntu 20.04
+          - arch: armv7
+            distro: ubuntu20.04
+          # 64-bit arm on ubuntu 20.04
+          - arch: aarch64
+            distro: ubuntu20.04
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+    - uses: actions/checkout@v3
+
+    # Do all the same steps as the above code, but all at once under the architecture
+    - uses: uraimo/run-on-arch-action@v2
+      name: Build on arch
+      with:
+        arch: ${{ matrix.arch }}
+        distro: ${{ matrix.distro }}
+        run: |
+          sudo curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
+          sudo curl -s --compressed -o /etc/apt/sources.list.d/ctr2023.list "https://deb.ctr-electronics.com/ctr2023.list"
+          sudo apt-get update
+          sudo apt-get install phoenix-pro cmake build-essential libsdl2-dev
+          mkdir build
+          cd build
+          cmake ..
+          make
