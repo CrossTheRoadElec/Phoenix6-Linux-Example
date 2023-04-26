@@ -37,7 +37,7 @@ jobs:
       - name: Install Phoenix Pro
         run: |
           sudo apt-get update
-          sudo apt-get install phoenix-pro cmake build-essential
+          sudo apt-get install phoenix-pro cmake build-essential libsdl2-dev
 
       # Build using CMake
       - name: Build Example
