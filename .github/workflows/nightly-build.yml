@@ -8,6 +8,7 @@ on:
   schedule:
     # Run every day at 12:00 AM (nightly builds)
     - cron: '0 12 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: read
