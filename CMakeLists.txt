@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-project(Phoenix-Pro-Example)
+project(Phoenix6-Example)
 
 # Use C++17
 set(CMAKE_CXX_STANDARD 17)
@@ -14,7 +14,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 # Required packages
-find_package(phoenix-pro REQUIRED)
+find_package(phoenix6 REQUIRED)
 find_package(Threads REQUIRED)
 find_package(SDL2 REQUIRED)
 
@@ -26,6 +26,6 @@ add_definitions(-DUNIT_LIB_DISABLE_FMT -DUNIT_LIB_ENABLE_IOSTREAM)
 add_executable(${PROJECT_NAME} main.cpp RobotBase.cpp Joystick.cpp)
 
 # Specify libraries to link against
-target_link_libraries(${PROJECT_NAME} phoenix-pro)
+target_link_libraries(${PROJECT_NAME} phoenix6)
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
