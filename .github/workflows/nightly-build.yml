@@ -33,7 +33,7 @@ jobs:
           sudo curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
           sudo curl -s --compressed -o /etc/apt/sources.list.d/ctr2024.list "https://deb.ctr-electronics.com/ctr2024.list"
 
-      # Update apt and install phoenixpro
+      # Update apt and install phoenix6
       - name: Install Phoenix 6
         run: |
           sudo apt-get update

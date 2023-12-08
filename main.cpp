@@ -1,8 +1,8 @@
-#include "ctre/phoenixpro/TalonFX.hpp"
+#include "ctre/phoenix6/TalonFX.hpp"
 #include "RobotBase.hpp"
 #include "Joystick.hpp"
 
-using namespace ctre::phoenixpro;
+using namespace ctre::phoenix6;
 
 /**
  * This is the main robot. Put all actuators, sensors,
