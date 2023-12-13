@@ -38,8 +38,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install phoenix6 cmake build-essential libsdl2-dev -y
-          mv /usr/lib/phoenix6/cmake/phoenix-pro-config-version.cmake /usr/lib/phoenix6/cmake/phoenix6-config-version.cmake
-          mv /usr/lib/phoenix6/cmake/phoenix-pro-config.cmake /usr/lib/phoenix6/cmake/phoenix6-config.cmake
+          sudo mv /usr/lib/phoenix6/cmake/phoenix-pro-config-version.cmake /usr/lib/phoenix6/cmake/phoenix6-config-version.cmake
+          sudo mv /usr/lib/phoenix6/cmake/phoenix-pro-config.cmake /usr/lib/phoenix6/cmake/phoenix6-config.cmake
 
       # Build using CMake
       - name: Build Example
