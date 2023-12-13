@@ -14,7 +14,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 
 # Required packages
-find_package(phoenix-pro REQUIRED)
+find_package(phoenix6 REQUIRED)
 find_package(Threads REQUIRED)
 find_package(SDL2 REQUIRED)
 
