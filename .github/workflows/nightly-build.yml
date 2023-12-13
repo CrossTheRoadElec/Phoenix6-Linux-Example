@@ -105,6 +105,8 @@ jobs:
           curl -s --compressed -o /etc/apt/sources.list.d/ctr2024.list "https://deb.ctr-electronics.com/ctr2024.list"
           apt-get update
           apt-get install phoenix6 cmake build-essential libsdl2-dev -y
+          mv /usr/lib/phoenix6/cmake/phoenix-pro-config-version.cmake /usr/lib/phoenix6/cmake/phoenix6-config-version.cmake
+          mv /usr/lib/phoenix6/cmake/phoenix-pro-config.cmake /usr/lib/phoenix6/cmake/phoenix6-config.cmake
 
         # Perform the necesary steps to build the example
         run: |
