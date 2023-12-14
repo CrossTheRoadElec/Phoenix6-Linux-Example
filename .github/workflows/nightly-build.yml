@@ -48,6 +48,13 @@ jobs:
           cd build
           cmake ..
           make
+      - name: Run Example
+        run: |
+          cd build
+          ./Phoenix6-Example
+          CHILD_PID=$!
+          sleep 10
+          kill $CHILD_PID
 
   build-arm:
     strategy:
