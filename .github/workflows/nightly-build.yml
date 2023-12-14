@@ -51,10 +51,7 @@ jobs:
       - name: Run Example
         run: |
           cd build
-          ./Phoenix6-Example
-          CHILD_PID=$!
-          sleep 10
-          kill $CHILD_PID
+          timeout 10s ./Phoenix6-Example || ( [[ $? -eq 124 ]] && echo "Program started successfully" )
 
   build-arm:
     strategy:
