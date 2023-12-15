@@ -116,7 +116,4 @@ jobs:
           cd build
           cmake ..
           make
-      - name: Run Example
-        run: |
-          cd build
           timeout 10s ./Phoenix6-Example || ( [[ $? -eq 124 ]] && echo "Program started successfully" )
