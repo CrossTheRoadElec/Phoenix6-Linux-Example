@@ -31,13 +31,13 @@ jobs:
       - name: Add Phoenix Pro to local apt
         run: |
           sudo curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
-          sudo curl -s --compressed -o /etc/apt/sources.list.d/ctr2023.list "https://deb.ctr-electronics.com/ctr2023.list"
+          sudo curl -s --compressed -o /etc/apt/sources.list.d/ctr2024.list "https://deb.ctr-electronics.com/ctr2024.list"
 
-      # Update apt and install phoenixpro
-      - name: Install Phoenix Pro
+      # Update apt and install phoenix6
+      - name: Install Phoenix 6
         run: |
           sudo apt-get update
-          sudo apt-get install phoenix-pro cmake build-essential libsdl2-dev -y
+          sudo apt-get install phoenix6 cmake build-essential libsdl2-dev -y
 
       # Build using CMake
       - name: Build Example
@@ -46,6 +46,10 @@ jobs:
           cd build
           cmake ..
           make
+      - name: Run Example
+        run: |
+          cd build
+          timeout 10s ./Phoenix6-Example || ( [[ $? -eq 124 ]] && echo "Program started successfully" )
 
   build-arm:
     strategy:
@@ -102,9 +106,9 @@ jobs:
           apt-get update
           apt-get install curl -y
           curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
-          curl -s --compressed -o /etc/apt/sources.list.d/ctr2023.list "https://deb.ctr-electronics.com/ctr2023.list"
+          curl -s --compressed -o /etc/apt/sources.list.d/ctr2024.list "https://deb.ctr-electronics.com/ctr2024.list"
           apt-get update
-          apt-get install phoenix-pro cmake build-essential libsdl2-dev -y
+          apt-get install phoenix6 cmake build-essential libsdl2-dev -y
 
         # Perform the necesary steps to build the example
         run: |
@@ -112,3 +116,4 @@ jobs:
           cd build
           cmake ..
           make
+          timeout 10s ./Phoenix6-Example || ( [[ $? -eq 124 ]] && echo "Program started successfully" )
