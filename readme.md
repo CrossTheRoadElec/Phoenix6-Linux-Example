@@ -18,4 +18,4 @@ By default, the Joystick class is used for controller input. Users on Ubuntu 22.
 
 When the canivore-usb kernel module is installed (required when using CANivore), **all** SocketCAN adapters will be automatically started by the robot program.
 
-However, if it is not installed, then SocketCAN adapters must be manually brought up before running the robot program using `./generic_socketcan_start.sh [CAN network (default: can0)]`.
+However, if it is not installed, then SocketCAN adapters must be manually brought up before running the robot program using `./generic_socketcan_start.sh [CAN interface (default: can0)]`.
