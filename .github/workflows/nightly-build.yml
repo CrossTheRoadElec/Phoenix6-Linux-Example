@@ -19,16 +19,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Build native on both ubuntu 22.04
+          # Build native on both ubuntu 22.04 and 24.04
           - os: ubuntu-22.04
+          - os: ubuntu-24.04
 
     runs-on: ${{ matrix.os }}
     steps:
       # Checkout code
       - uses: actions/checkout@v3
 
-      # Perform Phoenix Pro installation process
-      - name: Add Phoenix Pro to local apt
+      # Perform Phoenix 6 installation process
+      - name: Add Phoenix 6 to local apt
         run: |
           sudo curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
           sudo curl -s --compressed -o /etc/apt/sources.list.d/ctr2026.list "https://deb.ctr-electronics.com/ctr2026.list"
@@ -56,19 +57,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # 64-bit arm on bullseye
-          - arch: aarch64
-            distro: bullseye
           # 64-bit arm on bookworm
+          - arch: aarch64
+            distro: bookworm
+          # 64-bit arm on trixie
           - arch: none
             distro: none
-            base_image: arm64v8/debian:bookworm
-          # 64-bit arm on ubuntu 20.04
-          - arch: aarch64
-            distro: ubuntu20.04
+            base_image: --platform=linux/arm64 arm64v8/debian:trixie
           # 64-bit arm on ubuntu 22.04
           - arch: aarch64
             distro: ubuntu22.04
+          # 64-bit arm on ubuntu 24.04
+          - arch: aarch64
+            distro: ubuntu24.04
 
     runs-on: ubuntu-latest
 
@@ -77,7 +78,7 @@ jobs:
     - uses: actions/checkout@v3
 
     # Do all the same steps as the above code, but all at once under the architecture
-    - uses: uraimo/run-on-arch-action@v2
+    - uses: uraimo/run-on-arch-action@v3
       name: Build on arch
       with:
         arch: ${{ matrix.arch }}
