@@ -12,13 +12,13 @@ class Robot : public RobotBase {
 private:
     /* This can be a CANivore name, CANivore serial number,
      * SocketCAN interface, or "*" to select any CANivore. */
-    static constexpr char const *CANBUS_NAME = "*";
+    static constexpr char const *CANBUS = CANBus("*");
 
     /* devices */
-    hardware::TalonFX leftLeader{0, CANBUS_NAME};
-    hardware::TalonFX leftFollower{1, CANBUS_NAME};
-    hardware::TalonFX rightLeader{2, CANBUS_NAME};
-    hardware::TalonFX rightFollower{3, CANBUS_NAME};
+    hardware::TalonFX leftLeader{0, CANBUS};
+    hardware::TalonFX leftFollower{1, CANBUS};
+    hardware::TalonFX rightLeader{2, CANBUS};
+    hardware::TalonFX rightFollower{3, CANBUS};
 
     /* control requests */
     controls::DutyCycleOut leftOut{0};
