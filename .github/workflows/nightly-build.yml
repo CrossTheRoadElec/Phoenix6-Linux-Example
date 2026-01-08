@@ -59,10 +59,6 @@ jobs:
           # 64-bit arm on bullseye
           - arch: aarch64
             distro: bullseye
-          # 64-bit arm on bookworm
-          - arch: none
-            distro: none
-            base_image: arm64v8/debian:bookworm
           # 64-bit arm on ubuntu 20.04
           - arch: aarch64
             distro: ubuntu20.04
