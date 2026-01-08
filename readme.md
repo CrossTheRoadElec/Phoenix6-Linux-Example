@@ -3,15 +3,15 @@
 # Requirements
 
 1. Make sure you meet the [Phoenix 6 System Requirements](https://v6.docs.ctr-electronics.com/en/stable/docs/installation/requirements.html)
-1. [Install Phoenix 6](https://v6.docs.ctr-electronics.com/en/stable/docs/installation/installation-nonfrc.html) using the C++ (Linux) instructions
-2. If using a CANivore, [install canivore-usb](https://v6.docs.ctr-electronics.com/en/stable/docs/canivore/canivore-setup.html#linux-non-frc)
+2. [Install Phoenix 6](https://v6.docs.ctr-electronics.com/en/stable/docs/installation/installation-nonfrc.html) using the C++ (Linux) instructions
+    - If using a CANivore, make sure to [install canivore-usb](https://v6.docs.ctr-electronics.com/en/stable/docs/installation/installation-nonfrc.html#canivore-installation)
 3. Install libsdl2: `sudo apt install libsdl2-dev`
 
 # Modifying the Robot Program
 
 The main robot program is located inside main.cpp.
 
-By default, the Joystick class is used for controller input. Users on Ubuntu 22.04+ or Debian Bullseye may choose to use the GameController class instead.
+By default, the Joystick class is used for controller input. Users may choose to use the GameController class instead.
 
 # Build Process
 
