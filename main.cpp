@@ -1,5 +1,4 @@
 #include "ctre/phoenix6/TalonFX.hpp"
-#include <ctre/phoenix6/CANBus.hpp>
 #include "RobotBase.hpp"
 #include "Joystick.hpp"
 
@@ -13,7 +12,7 @@ class Robot : public RobotBase {
 private:
     /* This can be a CANivore name, CANivore serial number,
      * SocketCAN interface, or "*" to select any CANivore. */
-    static constexpr ctre::phoenix6::CANBus CANBUS{"*"};
+    static constexpr CANBus CANBUS{"*"};
 
     /* devices */
     hardware::TalonFX leftLeader{0, CANBUS};
