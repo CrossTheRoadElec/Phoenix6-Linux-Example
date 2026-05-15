@@ -51,7 +51,10 @@ public:
         /* first increment game controller count */
         {
             std::lock_guard lck{s_joyCntLck};
-            ++s_joyCnt;
+            if (s_joyCnt++ == 0) {
+                SDL_SetHint(SDL_HINT_NO_SIGNAL_HANDLERS, "1"); // so Ctrl-C still works
+                SDL_Init(SDL_INIT_GAMECONTROLLER);
+            }
         }
 
         /* then initialize this game controller */
@@ -131,26 +134,16 @@ public:
     /**
      * Returns whether this game controller is currently connected.
      */
-    bool IsConnected() const;
+    bool IsConnected() const
+    {
+        return _joy && SDL_GameControllerGetAttached(_joy);
+    }
 
     /**
      * Periodically manages this game controller, handling disconnect
      * events in the process.
      */
-    void Periodic()
-    {
-        /* poll for game controller disconnects */
-        if (!IsConnected()) {
-            /* one of the game controllers disconnected, assume it was ours */
-            Close();
-        }
-
-        /* game controller may have disconnected, make sure it's still valid */
-        if (!_joy) {
-            /* no game controller, initialize a new one */
-            Init();
-        }
-    }
+    void Periodic();
 
 private:
     static constexpr auto kErrorTimeMs = 3000;

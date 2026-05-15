@@ -3,27 +3,22 @@
 /*static*/ std::mutex GameController::s_joyCntLck;
 /*static*/ uint64_t GameController::s_joyCnt{0};
 
-bool GameController::IsConnected() const
+void GameController::Periodic()
 {
-    if (!_joy) {
-        /* no game controller */
-        return false;
-    }
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {}
 
     /* poll for game controller disconnects */
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            /* SDL shut down */
-            return false;
-        }
-        else if (event.cdevice.type == SDL_CONTROLLERDEVICEREMOVED) {
-            /* SDL game controller removed */
-            return false;
-        }
+    if (!IsConnected()) {
+        /* one of the game controllers disconnected, assume it was ours */
+        Close();
     }
 
-    return true;
+    /* game controller may have disconnected, make sure it's still valid */
+    if (!_joy) {
+        /* no game controller, initialize a new one */
+        Init();
+    }
 }
 
 void GameController::ReportMissingGameController()
@@ -39,11 +34,6 @@ void GameController::ReportMissingGameController()
 
 SDL_GameController *GameController::CreateGameController()
 {
-    /* SDL seems somewhat fragile, shut it down and bring it up */
-    SDL_Quit();
-    SDL_SetHint(SDL_HINT_NO_SIGNAL_HANDLERS, "1"); // so Ctrl-C still works
-    SDL_Init(SDL_INIT_GAMECONTROLLER);
-
     /* poll for game controller */
     int res = SDL_NumJoysticks();
     if (res < 0) {

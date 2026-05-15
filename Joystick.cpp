@@ -3,27 +3,22 @@
 /*static*/ std::mutex Joystick::s_joyCntLck;
 /*static*/ uint64_t Joystick::s_joyCnt{0};
 
-bool Joystick::IsConnected() const
+void Joystick::Periodic()
 {
-    if (!_joy) {
-        /* no joystick */
-        return false;
-    }
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {}
 
     /* poll for joystick disconnects */
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            /* SDL shut down */
-            return false;
-        }
-        else if (event.cdevice.type == SDL_JOYDEVICEREMOVED) {
-            /* SDL joystick removed */
-            return false;
-        }
+    if (!IsConnected()) {
+        /* one of the joysticks disconnected, assume it was ours */
+        Close();
     }
 
-    return true;
+    /* joystick may have disconnected, make sure it's still valid */
+    if (!_joy) {
+        /* no joystick, initialize a new one */
+        Init();
+    }
 }
 
 void Joystick::ReportMissingJoystick()
@@ -39,11 +34,6 @@ void Joystick::ReportMissingJoystick()
 
 SDL_Joystick *Joystick::CreateJoystick()
 {
-    /* SDL seems somewhat fragile, shut it down and bring it up */
-    SDL_Quit();
-    SDL_SetHint(SDL_HINT_NO_SIGNAL_HANDLERS, "1"); // so Ctrl-C still works
-    SDL_Init(SDL_INIT_GAMECONTROLLER);
-
     /* poll for joysticks */
     int res = SDL_NumJoysticks();
     if (res < 0) {
