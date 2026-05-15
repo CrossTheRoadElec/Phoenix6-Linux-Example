@@ -1,5 +1,5 @@
 #include "RobotBase.hpp"
-#include "ctre/phoenix6/unmanaged/Unmanaged.hpp" // for FeedEnable
+#include "ctre/phoenix6/unmanaged/Unmanaged.hpp"
 
 int RobotBase::Run()
 {
@@ -17,11 +17,11 @@ int RobotBase::Run()
         /* check if we're enabled */
         if (IsEnabled()) {
             /* enabled */
-            if (_lastEnabled != 1) {
+            if (!_lastEnabled.value_or(false)) {
                 /* just switched, run enabled init */
                 printf("Robot ENABLED\n");
                 EnabledInit();
-                _lastEnabled = 1;
+                _lastEnabled = true;
             }
 
             /* enable for 100 ms */
@@ -30,11 +30,16 @@ int RobotBase::Run()
             EnabledPeriodic();
         } else {
             /* disabled */
-            if (_lastEnabled != 0) {
+            if (_lastEnabled.value_or(true)) {
                 /* just switched, run disabled init */
                 printf("Robot DISABLED\n");
                 DisabledInit();
-                _lastEnabled = 0;
+
+                if (_lastEnabled.has_value()) {
+                    /* we were enabled, disable now */
+                    ctre::phoenix::unmanaged::FeedEnable(0);
+                }
+                _lastEnabled = false;
             }
 
             /* run disabled periodic */

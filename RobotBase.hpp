@@ -2,6 +2,7 @@
 
 #include "units/time.h"
 #include <chrono>
+#include <optional>
 #include <thread>
 #include <stdint.h>
 
@@ -24,7 +25,7 @@ public:
 
 private:
     units::millisecond_t _loopTime = 20_ms;
-    int _lastEnabled = -1;
+    std::optional<bool> _lastEnabled;
 
 public:
     /**
@@ -49,7 +50,7 @@ public:
     int Run();
 
 private:
-    static constexpr auto kErrorTimeMs = 500;
+    static constexpr auto kErrorTimeMs = 3000;
     std::chrono::time_point<std::chrono::steady_clock> _lastErrorTime = std::chrono::steady_clock::now();
 
     /** Reports a loop overrun with debouncing. */
