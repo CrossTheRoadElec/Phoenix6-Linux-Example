@@ -8,8 +8,6 @@
 
 /**
  * Manages a game controller using the SDL 2 library.
- *
- * Note: This requires Ubuntu 22.04+ or Debian Bullseye.
  */
 class GameController {
 private:
@@ -155,7 +153,7 @@ public:
     }
 
 private:
-    static constexpr auto kErrorTimeMs = 2000;
+    static constexpr auto kErrorTimeMs = 3000;
     std::chrono::time_point<std::chrono::steady_clock> _lastErrorTime = std::chrono::steady_clock::now();
 
     /** Reports a missing game controller with debouncing. */

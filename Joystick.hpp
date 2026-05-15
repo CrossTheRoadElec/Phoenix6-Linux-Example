@@ -9,9 +9,8 @@
 /**
  * Manages a joystick using the SDL 2 library.
  *
- * Note: This is a legacy class for users on Ubuntu
- *       20.04 and older. Users on newer systems
- *       can use the GameController class.
+ * Note: This is a legacy class for users with
+ *       joysticks not supported by GameController.
  */
 class Joystick {
 private:
@@ -193,7 +192,7 @@ public:
     }
 
 private:
-    static constexpr auto kErrorTimeMs = 2000;
+    static constexpr auto kErrorTimeMs = 3000;
     std::chrono::time_point<std::chrono::steady_clock> _lastErrorTime = std::chrono::steady_clock::now();
 
     /** Reports a missing joystick with debouncing. */

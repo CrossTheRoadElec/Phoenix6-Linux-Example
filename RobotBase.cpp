@@ -1,12 +1,9 @@
 #include "RobotBase.hpp"
-#include "ctre/phoenix6/unmanaged/Unmanaged.hpp"
+#include <ctre/phoenix6/unmanaged/Unmanaged.hpp>
 
 int RobotBase::Run()
 {
-    printf("Starting robot program...\n");
-
-    /* this is robot startup, run robot init */
-    RobotInit();
+    printf("Robot program startup complete\n");
 
     while (IsRunning()) {
         auto const start = std::chrono::steady_clock::now();
@@ -59,10 +56,6 @@ int RobotBase::Run()
             SleepFor(0_ms);
         }
     }
-
-    /* program shutting down */
-    printf("Stopping robot program...\n");
-
     return 0;
 }
 

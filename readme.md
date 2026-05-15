@@ -11,7 +11,7 @@
 
 The main robot program is located inside main.cpp.
 
-By default, the Joystick class is used for controller input. Users may choose to use the GameController class instead.
+By default, the GameController class is used for controller input. Users may choose to use the Joystick class instead.
 
 # Build Process
 
