@@ -15,14 +15,16 @@ By default, the GameController class is used for controller input. Users may cho
 
 # Build Process
 
- 1. Make a build directory: `mkdir build`
- 2. CD into it: `cd build`
- 3. Generate cmake: `cmake ..`
- 4. Make the code: `make`
- 5. Execute the code: `./Phoenix6-Example`
+1. Make a build directory: `mkdir build`
+2. CD into it: `cd build`
+3. Generate cmake:
+  - Debug: `cmake ..` or `cmake .. -DCMAKE_BUILD_TYPE=Debug`
+  - Release: `cmake .. -DCMAKE_BUILD_TYPE=Release`
+4. Make the code: `make`
+5. Execute the code: `./Phoenix6-Example`
 
 ## Setting up Generic SocketCAN Adapters
 
-When the canivore-usb kernel module is installed (required when using CANivore), **all** SocketCAN adapters will be automatically started by the robot program.
+When the canivore-usb kernel module is installed (required when using CANivore), **all** SocketCAN adapters will be automatically configured and started by the robot program.
 
 However, if it is not installed, then SocketCAN adapters must be manually brought up before running the robot program using `./generic_socketcan_start.sh [CAN interface (default: can0)]`.

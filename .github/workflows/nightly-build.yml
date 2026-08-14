@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
   schedule:
     # Run every day at 12:00 AM (nightly builds)
-    - cron: '0 12 * * *'
+    - cron: '0 0 * * *'
   workflow_dispatch:
 
 permissions:
@@ -37,15 +37,15 @@ jobs:
       # Update apt and install phoenix6
       - name: Install Phoenix 6
         run: |
-          sudo apt-get update
-          sudo apt-get install phoenix6 cmake build-essential libsdl2-dev -y
+          sudo apt update
+          sudo apt install phoenix6 cmake build-essential libsdl2-dev -y
 
       # Build using CMake
       - name: Build Example
         run: |
           mkdir build
           cd build
-          cmake ..
+          cmake .. -DCMAKE_BUILD_TYPE=Release
           make
       - name: Run Example
         run: |
@@ -75,33 +75,33 @@ jobs:
 
     steps:
       # Checkout code
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    # Do all the same steps as the above code, but all at once under the architecture
-    - uses: uraimo/run-on-arch-action@v3
-      name: Build on arch
-      with:
-        arch: ${{ matrix.arch }}
-        distro: ${{ matrix.distro }}
-        base_image: ${{ matrix.base_image }}
+      # Do all the same steps as the above code, but all at once under the architecture
+      - uses: uraimo/run-on-arch-action@v3
+        name: Build on arch
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+          base_image: ${{ matrix.base_image }}
 
-        # Not required, but speeds up builds by storing container images in
-        # a GitHub package registry.
-        githubToken: ${{ github.token }}
+          # Not required, but speeds up builds by storing container images in
+          # a GitHub package registry.
+          githubToken: ${{ github.token }}
 
-        # Perform the installation in a cached state to speed up subsequent builds
-        install: |
-          apt-get update
-          apt-get install curl -y
-          curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
-          curl -s --compressed -o /etc/apt/sources.list.d/ctr2026.list "https://deb.ctr-electronics.com/ctr2026.list"
-          apt-get update
-          apt-get install phoenix6 cmake build-essential libsdl2-dev -y
+          # Perform the installation in a cached state to speed up subsequent builds
+          install: |
+            apt update
+            apt install curl -y
+            curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
+            curl -s --compressed -o /etc/apt/sources.list.d/ctr2026.list "https://deb.ctr-electronics.com/ctr2026.list"
+            apt update
+            apt install phoenix6 cmake build-essential libsdl2-dev -y
 
-        # Perform the necesary steps to build the example
-        run: |
-          mkdir build
-          cd build
-          cmake ..
-          make
-          timeout 10s ./Phoenix6-Example || ( [[ $? -eq 124 ]] && echo "Program started successfully" )
+          # Perform the necesary steps to build the example
+          run: |
+            mkdir build
+            cd build
+            cmake .. -DCMAKE_BUILD_TYPE=Release
+            make
+            timeout 10s ./Phoenix6-Example || ( [[ $? -eq 124 ]] && echo "Program started successfully" )
