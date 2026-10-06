@@ -14,14 +14,16 @@ permissions:
   contents: read
 
 jobs:
-  build-native:
+  build:
     strategy:
       fail-fast: false
       matrix:
         include:
-          # Build native on both ubuntu 22.04 and 24.04
+          # Build on both ubuntu 22.04 and 24.04
           - os: ubuntu-22.04
           - os: ubuntu-24.04
+          - os: ubuntu-22.04-arm
+          - os: ubuntu-24.04-arm
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -51,57 +53,3 @@ jobs:
         run: |
           cd build
           timeout 10s ./Phoenix6-Example || ( [[ $? -eq 124 ]] && echo "Program started successfully" )
-
-  build-arm:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          # 64-bit arm on bookworm
-          - arch: aarch64
-            distro: bookworm
-          # 64-bit arm on trixie
-          - arch: none
-            distro: none
-            base_image: --platform=linux/arm64 arm64v8/debian:trixie
-          # 64-bit arm on ubuntu 22.04
-          - arch: aarch64
-            distro: ubuntu22.04
-          # 64-bit arm on ubuntu 24.04
-          - arch: aarch64
-            distro: ubuntu24.04
-
-    runs-on: ubuntu-latest
-
-    steps:
-      # Checkout code
-      - uses: actions/checkout@v3
-
-      # Do all the same steps as the above code, but all at once under the architecture
-      - uses: uraimo/run-on-arch-action@v3
-        name: Build on arch
-        with:
-          arch: ${{ matrix.arch }}
-          distro: ${{ matrix.distro }}
-          base_image: ${{ matrix.base_image }}
-
-          # Not required, but speeds up builds by storing container images in
-          # a GitHub package registry.
-          githubToken: ${{ github.token }}
-
-          # Perform the installation in a cached state to speed up subsequent builds
-          install: |
-            apt update
-            apt install curl -y
-            curl -s --compressed -o /usr/share/keyrings/ctr-pubkey.gpg "https://deb.ctr-electronics.com/ctr-pubkey.gpg"
-            curl -s --compressed -o /etc/apt/sources.list.d/ctr2026.list "https://deb.ctr-electronics.com/ctr2026.list"
-            apt update
-            apt install phoenix6 cmake build-essential libsdl2-dev -y
-
-          # Perform the necesary steps to build the example
-          run: |
-            mkdir build
-            cd build
-            cmake .. -DCMAKE_BUILD_TYPE=Release
-            make
-            timeout 10s ./Phoenix6-Example || ( [[ $? -eq 124 ]] && echo "Program started successfully" )
